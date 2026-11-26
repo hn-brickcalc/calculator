@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#2f7d6d">
+<meta name="theme-color" content="#1f6f5f">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="icon.svg">
@@ -11,131 +11,233 @@
 <meta name="mobile-web-app-capable" content="yes">
 <title>حاسبة البناء</title>
 <style>
-:root{--ink:#251f21;--ink2:#585254;--line:#eae9ea;--teal:#4f8f7e;--sand:#f4efec}
-*{box-sizing:border-box}
-body{margin:0;background:#fff;color:var(--ink);font:15px/1.6 system-ui,-apple-system,"Segoe UI",Tahoma,sans-serif}
-main{max-width:560px;margin:0 auto;padding:24px 20px 48px}
-h1{font-size:26px;line-height:1.3;margin:0 0 6px}
-h2{font-size:19px;margin:28px 0 10px}
-p.sub{color:var(--ink2);margin:0}
-label{display:block;font-size:13px;color:var(--ink2);margin:12px 0 4px}
-input,select{width:100%;font:inherit;font-size:17px;padding:11px 12px;border:1px solid #cfcbcc;border-radius:6px;background:#fff;color:var(--ink)}
+:root{--ink:#1f2326;--ink2:#5b6368;--line:#e4e8ea;--bg:#f3f5f6;--teal:#1f6f5f;--teal2:#2f8f7b;--tint:#e8f3f0;--sand:#fbf3e4;--sandl:#e9d3a4;--wa:#1fa05a}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.65 system-ui,-apple-system,"Segoe UI",Tahoma,"Noto Naskh Arabic",sans-serif}
+header{background:linear-gradient(135deg,#175a4d,#2f8f7b);color:#fff;padding:22px 20px 56px}
+.hd{max-width:600px;margin:0 auto;display:flex;align-items:center;gap:14px}
+.logo{width:52px;height:52px;border-radius:14px;background:rgba(255,255,255,.16);display:grid;place-items:center;font-size:28px;flex:none}
+header h1{font-size:23px;line-height:1.3;margin:0}
+header p{margin:2px 0 0;font-size:13.5px;opacity:.88}
+.tabs{position:sticky;top:0;z-index:5;max-width:600px;margin:-34px auto 0;padding:0 14px}
+.tabs div{display:flex;background:#fff;border-radius:14px;box-shadow:0 4px 16px rgba(20,40,40,.14);padding:5px;gap:4px}
+.tabs button{flex:1;border:0;background:transparent;font:inherit;font-weight:700;font-size:14.5px;padding:10px 4px;border-radius:10px;color:var(--ink2);cursor:pointer}
+.tabs button .ic{display:block;font-size:19px;line-height:1.2}
+.tabs button.on{background:var(--teal);color:#fff}
+main{max-width:600px;margin:0 auto;padding:16px 14px 40px}
+.panel{display:none}.panel.on{display:block}
+.card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:16px;margin-bottom:14px}
+.card h2{font-size:16.5px;margin:0 0 4px;display:flex;align-items:center;gap:8px}
+.card h2 i{font-style:normal;background:var(--tint);color:var(--teal);width:26px;height:26px;border-radius:50%;display:grid;place-items:center;font-size:13px}
+.hint{color:var(--ink2);font-size:13px;margin:0 0 6px}
+label{display:block;font-size:13px;color:var(--ink2);margin:12px 0 5px}
+input,select{width:100%;font:inherit;font-size:17px;padding:11px 12px;border:1.5px solid #d3d9dc;border-radius:10px;background:#fff;color:var(--ink);min-height:48px}
+input:focus,select:focus{outline:0;border-color:var(--teal2);box-shadow:0 0 0 3px rgba(47,143,123,.18)}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:0 12px}
-.seg{display:flex;gap:8px;flex-wrap:wrap}
-.seg button{font:inherit;padding:10px 14px;border:1px solid #cfcbcc;background:#fff;border-radius:6px;min-height:44px}
-.seg button.on{background:var(--teal);border-color:var(--teal);color:#fff}
-.res{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:8px 0 14px}
-.big{border:1px solid var(--line);border-radius:12px;padding:14px 4px;text-align:center}
-.big b{display:block;font-size:28px;line-height:36px;color:var(--teal)}
+.seg{display:flex;gap:6px;flex-wrap:wrap}
+.seg button{flex:1;min-width:56px;font:inherit;font-size:15px;padding:10px 6px;border:1.5px solid #d3d9dc;border-radius:10px;background:#fff;color:var(--ink);cursor:pointer;min-height:46px}
+.seg button.on{background:var(--teal);border-color:var(--teal);color:#fff;font-weight:700}
+.res{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:10px}
+.big{background:var(--tint);border-radius:14px;padding:12px 6px;text-align:center}
+.big b{display:block;font-size:25px;line-height:34px;color:var(--teal)}
 .big small{display:block;color:var(--ink2);font-size:12px;line-height:1.4}
-.row{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid var(--line)}
+.big .t{color:var(--ink);font-weight:700;font-size:13px}
+.row{display:flex;justify-content:space-between;gap:12px;padding:9px 0;border-bottom:1px solid var(--line);font-size:14.5px}
+.row:last-child{border:0}
 .row span:first-child{color:var(--ink2)}
-.row span:last-child{font-weight:600}
-ol{padding-inline-start:22px;color:var(--ink2);font-size:14px}
-ol li{margin-bottom:8px}
-.warn{background:var(--sand);border-radius:8px;padding:12px 14px;font-size:14px;margin-top:16px}
+.row span:last-child{font-weight:700}
+details{border-top:1px solid var(--line);margin-top:12px;padding-top:10px}
+summary{cursor:pointer;font-weight:700;color:var(--teal);font-size:14.5px}
+ol,ul{padding-inline-start:22px;color:var(--ink2);font-size:13.5px;margin:8px 0}
+li{margin-bottom:6px}
+.warn{background:var(--sand);border:1px solid var(--sandl);border-radius:12px;padding:12px 14px;font-size:13.5px;margin:10px 0}
+.src a{color:var(--teal);word-break:break-all}
 bdi{unicode-bidi:isolate}
 .hide{display:none}
-.cta{display:block;text-align:center;background:#25a05a;color:#fff;text-decoration:none;font-weight:700;font-size:17px;padding:14px;border-radius:10px;margin-top:20px}
-.about{background:var(--sand);border-radius:12px;padding:16px;margin-top:20px}
-.about h2{margin:0 0 6px}
+.cta{display:block;text-align:center;background:var(--wa);color:#fff;text-decoration:none;font-weight:700;font-size:17px;padding:15px;border-radius:14px;margin:6px 0 14px}
+.about h2{margin-bottom:6px}
 .about p{margin:4px 0;color:var(--ink2);font-size:14px}
-.about a{color:var(--teal);font-weight:600}
+.about a{color:var(--teal);font-weight:700}
+footer{text-align:center;color:var(--ink2);font-size:12px;padding:0 14px 28px}
 </style>
 </head>
 <body>
+<header><div class="hd"><div class="logo">🧱</div><div><h1>حاسبة البناء</h1><p>طوب • لياسة • دهانات: كميات الخامات بالأرقام</p></div></div></header>
+<nav class="tabs"><div id="tabs">
+<button data-t="brick" class="on"><span class="ic">🧱</span>بناء الطوب</button>
+<button data-t="plaster"><span class="ic">🪣</span>اللياسة</button>
+<button data-t="paint"><span class="ic">🎨</span>الدهانات</button>
+</div></nav>
 <main>
-<h1>حاسبة الطوب والأسمنت والرمل</h1>
-<p class="sub">أدخل مساحة الحائط ومقاس الطوب أو البلوك، وهتطلع لك الكميات.</p>
 
-<h2>١. الحائط</h2>
-<div class="seg" id="modeSeg"><button data-v="dims" class="on">طول × ارتفاع</button><button data-v="area">مساحة جاهزة</button></div>
-<div id="dimsBox" class="grid">
- <div><label>طول الحائط (م)</label><input id="length" inputmode="decimal"></div>
- <div><label>ارتفاع الحائط (م)</label><input id="height" inputmode="decimal"></div>
-</div>
-<div id="areaBox" class="hide"><label>مساحة الحائط (م²)</label><input id="area" inputmode="decimal"></div>
-<label>مساحة الفتحات: أبواب وشبابيك (م²)</label><input id="openings" inputmode="decimal" value="0">
-
-<h2>٢. نوع الطوب</h2>
-<select id="preset">
- <option value="25,12,6">طوب أحمر 25×12×6 (حائط نصف طوبة)</option>
- <option value="40,20,20" selected>بلوك 40×20×20</option>
- <option value="40,15,20">بلوك 40×15×20</option>
- <option value="40,10,20">بلوك 40×10×20</option>
- <option value="custom">مقاس آخر</option>
-</select>
-<div id="customBox" class="hide">
- <div class="grid">
-  <div><label>الطول (سم)</label><input id="cl" inputmode="decimal"></div>
-  <div><label>السمك = عرض الحائط (سم)</label><input id="cw" inputmode="decimal"></div>
-  <div><label>الارتفاع (سم)</label><input id="ch" inputmode="decimal"></div>
- </div>
-</div>
-
-<h2>٣. المونة والهالك</h2>
+<!-- ============ بناء الطوب ============ -->
+<section class="panel on" id="p-brick">
+<div class="card"><h2><i>١</i>الحائط</h2>
+<div class="seg" data-seg="b_mode"><button data-v="dims" class="on">طول × ارتفاع</button><button data-v="area">مساحة جاهزة</button></div>
+<div id="b_dims" class="grid"><div><label>طول الحائط (م)</label><input id="b_len" inputmode="decimal"></div><div><label>ارتفاع الحائط (م)</label><input id="b_h" inputmode="decimal"></div></div>
+<div id="b_ar" class="hide"><label>مساحة الحائط (م²)</label><input id="b_area" inputmode="decimal"></div>
+<label>مساحة الفتحات: أبواب وشبابيك (م²)</label><input id="b_open" inputmode="decimal" value="0"></div>
+<div class="card"><h2><i>٢</i>نوع الطوب</h2>
+<select id="b_preset">
+<option value="25,12,6">طوب أحمر 25×12×6 (حائط نصف طوبة)</option>
+<option value="40,20,20" selected>بلوك 40×20×20</option>
+<option value="40,15,20">بلوك 40×15×20</option>
+<option value="40,10,20">بلوك 40×10×20</option>
+<option value="custom">مقاس آخر</option></select>
+<div id="b_cust" class="hide grid" style="grid-template-columns:1fr 1fr 1fr"><div><label>الطول (سم)</label><input id="b_cl" inputmode="decimal"></div><div><label>السمك (سم)</label><input id="b_cw" inputmode="decimal"></div><div><label>الارتفاع (سم)</label><input id="b_ch" inputmode="decimal"></div></div></div>
+<div class="card"><h2><i>٣</i>المونة والهالك</h2>
 <label>خلطة المونة (أسمنت : رمل بالحجم)</label>
-<div class="seg" id="mixSeg"><button data-v="3">1:3</button><button data-v="4" class="on">1:4</button><button data-v="5">1:5</button><button data-v="6">1:6</button></div>
-<div class="grid">
- <div><label>سمك الفرشة والرأسي (سم)</label><input id="joint" inputmode="decimal" value="1"></div>
- <div><label>هالك الطوب (%)</label><input id="wu" inputmode="decimal" value="5"></div>
- <div><label>هالك المونة (%)</label><input id="wm" inputmode="decimal" value="10"></div>
-</div>
-
-<h2>النتيجة</h2>
-<div id="out"><p class="sub">أدخل المساحة ومقاس الطوب علشان تظهر الكميات.</p></div>
-
-<h2>المعادلات والافتراضات</h2>
-<ol>
+<div class="seg" data-seg="b_mix"><button data-v="3">1:3</button><button data-v="4" class="on">1:4</button><button data-v="5">1:5</button><button data-v="6">1:6</button></div>
+<div class="grid"><div><label>سمك الفرشة والرأسي (سم)</label><input id="b_joint" inputmode="decimal" value="1"></div><div><label>هالك الطوب (%)</label><input id="b_wu" inputmode="decimal" value="5"></div><div><label>هالك المونة (%)</label><input id="b_wm" inputmode="decimal" value="10"></div></div></div>
+<div class="card"><h2>النتيجة</h2><div id="b_out"></div>
+<details><summary>المعادلات والافتراضات</summary><ol>
 <li>المساحة الصافية = (الطول × الارتفاع) − الفتحات.</li>
-<li>الطوب في المتر المربع = 1 ÷ [(طول الطوبة + الفرشة) × (ارتفاع الطوبة + الفرشة)] بالمتر.</li>
-<li>عدد الطوب = المساحة × الطوب في المتر × (1 + هالك الطوب).</li>
-<li>المونة المبلولة لكل م² = سمك الحائط − (الطوب في المتر × حجم الطوبة الواحدة). ثم تضرب في المساحة وفي (1 + هالك المونة).</li>
-<li>المونة الجافة = المبلولة × 1.27 (معامل التضخم الشائع بين 1.25 و1.33).</li>
+<li>الطوب في م² = 1 ÷ [(طول الطوبة + الفرشة) × (ارتفاع الطوبة + الفرشة)] بالمتر.</li>
+<li>عدد الطوب = المساحة × الطوب في م² × (1 + هالك الطوب).</li>
+<li>المونة المبلولة لكل م² = سمك الحائط − (الطوب في م² × حجم الطوبة). تُضرب في المساحة وفي (1 + هالك المونة).</li>
+<li>المونة الجافة = المبلولة × 1.27 (معامل التضخم).</li>
 <li>لخلطة 1:ن: الأسمنت = الجاف ÷ (1+ن)، والرمل = الجاف × ن ÷ (1+ن).</li>
-<li>الأسمنت بالوزن = الحجم × 1440 كجم/م³، والشيكارة 50 كجم. الرمل 1600 كجم/م³.</li>
-</ol>
-<div class="warn"><b>خد بالك:</b> الأرقام تقديرية للطلبية. الحسبة بدون بياض (لياسة) ولا أعمدة ولا أعتاب، وبفرض فرشة وفواصل رأسية كاملة بنفس السمك. راجع الخلطة والهالك حسب مواصفات المشروع.</div>
+<li>الأسمنت بالوزن = الحجم × 1440 كجم/م³، والشيكارة 50 كجم. الرمل 1600 كجم/م³.</li></ol>
+<div class="warn">الحسبة بدون لياسة ولا أعمدة ولا أعتاب، وبفرض فرشة وفواصل رأسية كاملة بنفس السمك.</div></details></div>
+</section>
+
+<!-- ============ اللياسة ============ -->
+<section class="panel" id="p-plaster">
+<div class="card"><h2><i>١</i>المساحة</h2>
+<div class="seg" data-seg="p_mode"><button data-v="dims" class="on">طول × ارتفاع</button><button data-v="area">مساحة جاهزة</button></div>
+<div id="p_dims" class="grid"><div><label>طول الحائط (م)</label><input id="p_len" inputmode="decimal"></div><div><label>ارتفاع الحائط (م)</label><input id="p_h" inputmode="decimal"></div></div>
+<div id="p_ar" class="hide"><label>المساحة (م²)</label><input id="p_area" inputmode="decimal"></div>
+<div class="grid"><div><label>الفتحات: أبواب وشبابيك (م²)</label><input id="p_open" inputmode="decimal" value="0"></div><div><label>مساحة أسقف تتلَيَّس (م²)</label><input id="p_ceil" inputmode="decimal" value="0"></div></div>
+<label>عدد أوجه الحائط اللي هتتلَيَّس</label>
+<div class="seg" data-seg="p_faces"><button data-v="1" class="on">وجه واحد</button><button data-v="2">وجهين</button></div>
+<p class="hint">الأسقف بتتحسب وجه واحد. الفتحات بتتخصم من كل وجه.</p></div>
+<div class="card"><h2><i>٢</i>الخلطة والسمك</h2>
+<label>خلطة المونة (أسمنت : رمل بالحجم)</label>
+<div class="seg" data-seg="p_mix"><button data-v="3">1:3</button><button data-v="4" class="on">1:4</button><button data-v="5">1:5</button><button data-v="6">1:6</button></div>
+<div class="grid"><div><label>سمك اللياسة الكلي (مم)</label><input id="p_t" inputmode="decimal" value="15"></div><div><label>هالك وعدم استواء (%)</label><input id="p_w" inputmode="decimal" value="15"></div></div>
+<div class="grid"><div><label>ماء ÷ أسمنت (وزنًا)</label><input id="p_wc" inputmode="decimal" value="0.5"></div><div><label>الرمل: كجم/م³</label><input id="p_sd" inputmode="decimal" value="1600"></div></div>
+<p class="hint">للمرجعية: لياسة 12 مم بدون هالك بخلطة 1:4 = 4.39 كجم أسمنت و0.0122 م³ رمل للمتر المربع.</p></div>
+<div class="card"><h2>النتيجة</h2><div id="p_out"></div>
+<details><summary>المعادلات والافتراضات</summary><ol>
+<li>المساحة = [(الطول × الارتفاع) − الفتحات] × عدد الأوجه + الأسقف.</li>
+<li>المونة المبلولة (م³) = المساحة × السمك (م) × (1 + الهالك).</li>
+<li>المونة الجافة = المبلولة × 1.27 (النقص في الحجم عند إضافة الماء).</li>
+<li>لخلطة 1:ن: الأسمنت (م³) = الجاف ÷ (1+ن)، والرمل (م³) = الجاف × ن ÷ (1+ن).</li>
+<li>الأسمنت بالوزن = الحجم × 1440 كجم/م³، والشيكارة 50 كجم.</li>
+<li>الماء (لتر) = وزن الأسمنت × نسبة ماء/أسمنت (افتراض عملي 0.5 والمقاول يضبطها بالقوام، وده خارج المصادر).</li></ol>
+<div class="warn">اللياسة المعتادة بتتعمل على طبقات (رش/بطانة/ضهارة). الحسبة بتاخد السمك الكلي. الحوائط الخشنة ومداميك البلوك الغير مستوية محتاجة هالك أعلى، ومن هنا الافتراض 15%.</div></details></div>
+</section>
+
+<!-- ============ الدهانات ============ -->
+<section class="panel" id="p-paint">
+<div class="card"><h2><i>١</i>المساحة</h2>
+<div class="seg" data-seg="d_mode"><button data-v="dims" class="on">طول × ارتفاع</button><button data-v="area">مساحة جاهزة</button></div>
+<div id="d_dims" class="grid"><div><label>طول الحيطان (م) أو المحيط</label><input id="d_len" inputmode="decimal"></div><div><label>الارتفاع (م)</label><input id="d_h" inputmode="decimal"></div></div>
+<div id="d_ar" class="hide"><label>مساحة الحيطان (م²)</label><input id="d_area" inputmode="decimal"></div>
+<div class="grid"><div><label>الفتحات (م²)</label><input id="d_open" inputmode="decimal" value="0"></div><div><label>الأسقف (م²)</label><input id="d_ceil" inputmode="decimal" value="0"></div></div></div>
+<div class="card"><h2><i>٢</i>المعجون (السكاكين)</h2>
+<label>عدد السكاكين</label>
+<div class="seg" data-seg="d_kn"><button data-v="0">من غير</button><button data-v="1">1</button><button data-v="2" class="on">2</button><button data-v="3">3</button></div>
+<div class="grid"><div><label>استهلاك المعجون (كجم/م²)</label><input id="d_pu" inputmode="decimal" value="1.5"></div><div><label>وزن الشيكارة (كجم)</label><select id="d_pb"><option>20</option><option>25</option><option>40</option></select></div></div>
+<p class="hint">القيمة بتتغير مع عدد السكاكين وتقدر تعدلها حسب خشونة اللياسة.</p></div>
+<div class="card"><h2><i>٣</i>السيلر / البرايمر</h2>
+<label>عدد أوجه السيلر</label>
+<div class="seg" data-seg="d_pr"><button data-v="0">من غير</button><button data-v="1" class="on">1</button><button data-v="2">2</button></div>
+<label>تغطية اللتر (م²/لتر للوجه)</label><input id="d_pc" inputmode="decimal" value="8"></div>
+<div class="card"><h2><i>٤</i>الدهان البلاستيك</h2>
+<label>عدد الأوجه</label>
+<div class="seg" data-seg="d_co"><button data-v="2" class="on">2</button><button data-v="3">3</button><button data-v="1">1</button></div>
+<div class="grid"><div><label>تغطية اللتر (م²/لتر للوجه)</label><input id="d_cc" inputmode="decimal" value="10"></div><div><label>سعة الجردل (لتر)</label><select id="d_bk"><option selected>18</option><option>14</option><option>9</option><option>4</option></select></div></div>
+<label>هالك (%)</label><input id="d_w" inputmode="decimal" value="8"></div>
+<div class="card"><h2>النتيجة</h2><div id="d_out"></div>
+<details><summary>المعادلات والافتراضات</summary><ol>
+<li>المساحة الصافية = [(الطول × الارتفاع) − الفتحات] + الأسقف.</li>
+<li>كمية أي خامة = المساحة ÷ التغطية × عدد الأوجه × (1 + الهالك). المعجون: المساحة × الاستهلاك (كجم/م²) × (1 + الهالك).</li>
+<li>العبوات = الكمية ÷ سعة العبوة مقرّبة لأعلى.</li>
+<li>المعجون الأسمنتي على لياسة: سكينة أولى 0.8 إلى 1.0 كجم/م²، وثانية 0.5 إلى 0.7. المستخدم هنا 0.9 + 0.6 = 1.5 للسكينتين، و0.9 لسكينة واحدة، و2.0 لثلاثة.</li>
+<li>سيلر/برايمر: 8 إلى 10 م²/لتر للوجه (على اللياسة الجديدة الماصة 7 إلى 9). المستخدم 8.</li>
+<li>دهان بلاستيك داخلي: 10 إلى 12 م²/لتر للوجه تقريبًا (الفاخر 12 إلى 14). المستخدم 10.</li>
+<li>الأرقام الفعلية بتختلف حسب الماركة ونوع الرول، فراجع نشرة المنتج وعدّل الخانات.</li></ol>
+<div class="warn">بعض الشركات بتنشر تغطية معجون أعلى بكتير (طبقة رقيقة جدًا). لو عندك نشرة بيانات المنتج اللي هتشتريه، غيّر خانة الاستهلاك.</div></details></div>
+</section>
+
+<details class="card src"><summary>مصادر معدلات الاستهلاك</summary>
+<ul>
+<li>اللياسة 12 مم (1:4 و1:6، معامل 1.27، أسمنت 1440 كجم/م³): <a href="https://www.engineeringnepal.com.np/2026/10/cement-sand-for-1-m2-12mm-plaster.html">engineeringnepal.com.np</a>، و<a href="https://civilos.in/guides/plaster-quantity-calculation.html">civilos.in</a></li>
+<li>المعجون والسكاكين والدهان بالبستلة (عربي): <a href="https://bonyandocs.com/tools/paints-putty-coating-calculator">bonyandocs.com</a></li>
+<li>تغطية البرايمر والدهان الداخلي (IS 2395 / CPWD): <a href="https://infralens.in/handbook/paint-coverage">infralens.in</a></li>
+<li>تغطية الدهان الداخلي 10 إلى 12 م²/لتر: <a href="https://tarulo.com/ar/interior/paint-coverage-guide">tarulo.com</a>، و<a href="https://www.timepaints.com/en/faq/g0mnd/how-much-area-does-a-liter-of-paint-cover">timepaints.com</a></li>
+<li>معجون كجم/م² منخفض جدًا (طبقة رقيقة): <a href="https://www.birlawhite.com/en/media/blogs/how-to-estimate-your-wall-putty-needs">birlawhite.com</a></li>
+</ul>
+<p class="hint">الأرقام تقديرية للطلبية وليست بديلًا عن نشرة المنتج ومواصفات المشروع.</p></details>
+
 <a class="cta" id="waBtn" href="#" target="_blank" rel="noopener">اطلب حساب كميات / استشارة على واتساب</a>
-<section class="about" id="about"><h2>عن المطور</h2>
+<section class="card about" id="about"><h2>عن المطور</h2>
 <p><b id="devName"></b></p>
-<p>مهندس مدني في جدة. التطبيق ده عملته علشان يسهّل حساب كميات الطوب والأسمنت والرمل في الموقع.</p>
+<p>مهندس مدني في جدة. التطبيق ده عملته علشان يسهّل حساب كميات الخامات في الموقع.</p>
 <p>لو عايز حساب كميات لمشروعك أو استشارة، كلمني على واتساب.</p>
 <p><a id="waLink" href="#" target="_blank" rel="noopener">تواصل على واتساب</a></p></section>
 </main>
+<footer>حاسبة البناء • تعمل بدون إنترنت</footer>
 <script>
 var CONFIG={name:'م. حسام نزيه',whatsapp:'966571431108',msg:'السلام عليكم، عايز حساب كميات / استشارة.'};
 (function(){var u='https://wa.me/'+CONFIG.whatsapp+'?text='+encodeURIComponent(CONFIG.msg);document.getElementById('waBtn').href=u;document.getElementById('waLink').href=u;document.getElementById('devName').textContent=CONFIG.name})();
 var $=function(i){return document.getElementById(i)};
-var mode='dims',mix=4;
-function n(v){v=String(v).replace(/[٠-٩]/g,function(d){return '٠١٢٣٤٥٦٧٨٩'.indexOf(d)}).replace('٫','.').replace(',','.');var x=parseFloat(v);return isFinite(x)&&x>0?x:0}
-function f(x,d){return x.toLocaleString('en-US',{maximumFractionDigits:d||0,minimumFractionDigits:d||0})}
-function seg(id,cb){$(id).addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;[].forEach.call($(id).children,function(c){c.classList.remove('on')});b.classList.add('on');cb(b.dataset.v);calc()})}
-seg('modeSeg',function(v){mode=v;$('dimsBox').classList.toggle('hide',v!=='dims');$('areaBox').classList.toggle('hide',v==='dims')});
-seg('mixSeg',function(v){mix=+v});
-$('preset').addEventListener('change',function(){$('customBox').classList.toggle('hide',this.value!=='custom');calc()});
-['length','height','area','openings','cl','cw','ch','joint','wu','wm'].forEach(function(i){$(i).addEventListener('input',calc)});
-function calc(){
- var l,w,h,p=$('preset').value;
- if(p==='custom'){l=n($('cl').value);w=n($('cw').value);h=n($('ch').value)}else{var a=p.split(',');l=+a[0];w=+a[1];h=+a[2]}
- var gross=mode==='dims'?n($('length').value)*n($('height').value):n($('area').value);
- var area=Math.max(0,gross-n($('openings').value));
- var j=Math.max(0,parseFloat($('joint').value)||0);
- if(!area||!l||!w||!h){$('out').innerHTML='<p class="sub">أدخل المساحة ومقاس الطوب علشان تظهر الكميات.</p>';return}
- var per=1/(((l+j)/100)*((h+j)/100)),net=area*per;
- var total=Math.ceil(net*(1+n($('wu').value)/100));
- var uv=(l/100)*(w/100)*(h/100);
- var wetM2=Math.max(0,w/100-per*uv);
- var wet=wetM2*area*(1+n($('wm').value)/100),dry=wet*1.27;
- var cem=dry/(1+mix),sand=dry*mix/(1+mix),kg=cem*1440,bags=Math.ceil(kg/50);
- $('out').innerHTML=
- '<div class="res"><div class="big"><small>الطوب</small><b>'+f(total)+'</b><small>طوبة</small></div>'+
- '<div class="big"><small>الأسمنت</small><b>'+f(bags)+'</b><small>شيكارة (50 كجم)</small></div>'+
- '<div class="big"><small>الرمل</small><b>'+f(sand,2)+'</b><small>م³</small></div></div>'+
- r('مساحة البناء الصافية',f(area,2)+' م²')+r('عدد الطوب في المتر',f(per,1)+' / م²')+r('الطوب بدون هالك',f(Math.ceil(net)))+
- r('الأسمنت بالوزن',f(kg)+' كجم')+r('الرمل بالوزن (تقريبي)',f(sand*1.6,2)+' طن')+r('حجم المونة (مبلولة / جافة)',f(wet,3)+' / '+f(dry,3)+' م³');
-}
+function n(v){v=String(v==null?'':v).replace(/[٠-٩]/g,function(d){return d.charCodeAt(0)-1632}).replace(/٫/g,'.').replace(/,/g,'.');var x=parseFloat(v);return isFinite(x)&&x>0?x:0}
+function f(x,d){d=d||0;return x.toLocaleString('en-US',{minimumFractionDigits:d,maximumFractionDigits:d})}
 function r(a,b){return '<div class="row"><span>'+a+'</span><span><bdi>'+b+'</bdi></span></div>'}
+function big(t,v,u){return '<div class="big"><small class="t">'+t+'</small><b>'+v+'</b><small>'+u+'</small></div>'}
+var S={b_mode:'dims',b_mix:4,p_mode:'dims',p_faces:1,p_mix:4,d_mode:'dims',d_kn:2,d_pr:1,d_co:2};
+var KN={0:0,1:0.9,2:1.5,3:2.0};
+var calcs={};
+document.querySelectorAll('[data-seg]').forEach(function(el){el.addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;[].forEach.call(el.children,function(c){c.classList.remove('on')});b.classList.add('on');var k=el.dataset.seg;S[k]=b.dataset.v;
+ if(k==='b_mode'||k==='p_mode'||k==='d_mode'){var p=k[0];$(p+'_dims').classList.toggle('hide',b.dataset.v!=='dims');$(p+'_ar').classList.toggle('hide',b.dataset.v==='dims')}
+ if(k==='d_kn'){$('d_pu').value=KN[b.dataset.v]}
+ run()})});
+document.querySelectorAll('input,select').forEach(function(el){el.addEventListener('input',run)});
+$('tabs').addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;[].forEach.call($('tabs').children,function(c){c.classList.remove('on')});b.classList.add('on');document.querySelectorAll('.panel').forEach(function(p){p.classList.remove('on')});$('p-'+b.dataset.t).classList.add('on');window.scrollTo(0,0)});
+function area(p){var g=S[p+'_mode']==='dims'?n($(p+'_len').value)*n($(p+'_h').value):n($(p+'_area').value);return g}
+function brick(){
+ var l,w,h,v=$('b_preset').value;$('b_cust').classList.toggle('hide',v!=='custom');
+ if(v==='custom'){l=n($('b_cl').value);w=n($('b_cw').value);h=n($('b_ch').value)}else{var a=v.split(',');l=+a[0];w=+a[1];h=+a[2]}
+ var ar=Math.max(0,area('b')-n($('b_open').value)),j=Math.max(0,parseFloat($('b_joint').value)||0),mix=+S.b_mix;
+ if(!ar||!l||!w||!h){$('b_out').innerHTML='<p class="hint">أدخل المساحة ومقاس الطوب علشان تظهر الكميات.</p>';return}
+ var per=1/(((l+j)/100)*((h+j)/100)),net=ar*per,tot=Math.ceil(net*(1+n($('b_wu').value)/100));
+ var uv=(l/100)*(w/100)*(h/100),wetM2=Math.max(0,w/100-per*uv),wet=wetM2*ar*(1+n($('b_wm').value)/100),dry=wet*1.27;
+ var cem=dry/(1+mix),sand=dry*mix/(1+mix),kg=cem*1440,bags=Math.ceil(kg/50);
+ $('b_out').innerHTML='<div class="res">'+big('الطوب',f(tot),'طوبة')+big('الأسمنت',f(bags),'شيكارة (50 كجم)')+big('الرمل',f(sand,2),'م³')+'</div>'+
+ r('مساحة البناء الصافية',f(ar,2)+' م²')+r('عدد الطوب في المتر',f(per,1)+' / م²')+r('الطوب بدون هالك',f(Math.ceil(net)))+r('الأسمنت بالوزن',f(kg)+' كجم')+r('الرمل بالوزن (تقريبي)',f(sand*1.6,2)+' طن')+r('حجم المونة (مبلولة / جافة)',f(wet,3)+' / '+f(dry,3)+' م³');
+}
+function plaster(){
+ var op=n($('p_open').value),fc=+S.p_faces,wall=Math.max(0,area('p')-op)*fc,ceil=n($('p_ceil').value),ar=wall+ceil;
+ var t=n($('p_t').value),mix=+S.p_mix;
+ if(!ar||!t){$('p_out').innerHTML='<p class="hint">أدخل المساحة والسمك علشان تظهر الكميات.</p>';return}
+ var wet=ar*t/1000*(1+n($('p_w').value)/100),dry=wet*1.27,cem=dry/(1+mix),sand=dry*mix/(1+mix),kg=cem*1440,bags=Math.ceil(kg/50);
+ var sd=n($('p_sd').value)||1600,water=kg*n($('p_wc').value);
+ $('p_out').innerHTML='<div class="res">'+big('الأسمنت',f(bags),'شيكارة (50 كجم)')+big('الرمل',f(sand,2),'م³')+big('الماء',f(water),'لتر تقريبًا')+'</div>'+
+ r('مساحة اللياسة الإجمالية',f(ar,2)+' م²')+r('المونة المبلولة',f(wet,3)+' م³')+r('المونة الجافة (× 1.27)',f(dry,3)+' م³')+r('الأسمنت بالوزن',f(kg)+' كجم')+r('الرمل بالوزن',f(sand*sd/1000,2)+' طن')+
+ r('الأسمنت لكل م²',f(kg/ar,2)+' كجم')+r('الرمل لكل م²',f(sand/ar,4)+' م³');
+}
+function paint(){
+ var ar=Math.max(0,area('d')-n($('d_open').value))+n($('d_ceil').value);
+ if(!ar){$('d_out').innerHTML='<p class="hint">أدخل المساحة علشان تظهر الكميات.</p>';return}
+ var wf=1+n($('d_w').value)/100,bk=n($('d_bk').value)||18,pb=n($('d_pb').value)||20,kn=+S.d_kn,pr=+S.d_pr,co=+S.d_co;
+ var pk=kn?ar*n($('d_pu').value)*wf:0,pbags=Math.ceil(pk/pb);
+ var pl=pr?ar/(n($('d_pc').value)||8)*pr*wf:0,pbk=Math.ceil(pl/bk);
+ var dl=ar/(n($('d_cc').value)||10)*co*wf,dbk=Math.ceil(dl/bk);
+ var h='<div class="res">';
+ if(kn)h+=big('المعجون',f(pbags),'شيكارة '+pb+' كجم');
+ if(pr)h+=big('السيلر',f(pbk),'جردل '+bk+' لتر');
+ h+=big('دهان بلاستيك',f(dbk),'جردل '+bk+' لتر')+'</div>';
+ h+=r('المساحة الصافية',f(ar,2)+' م²');
+ if(kn)h+=r('المعجون بالوزن',f(pk,1)+' كجم');
+ if(pr)h+=r('السيلر باللتر',f(pl,1)+' لتر');
+ h+=r('الدهان باللتر',f(dl,1)+' لتر')+r('إجمالي أوجه الدهان',f(ar*co,1)+' م² وجه');
+ $('d_out').innerHTML=h;
+}
+function run(){brick();plaster();paint()}
+run();
 if("serviceWorker" in navigator&&location.protocol.indexOf("http")===0){navigator.serviceWorker.register("sw.js")}
 </script>
 </body>
