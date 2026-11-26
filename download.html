@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="ar" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#2f7d6d"><title>تحميل حاسبة البناء</title>
+<link rel="icon" href="icon.svg">
+<style>body{margin:0;font:16px/1.7 system-ui,-apple-system,"Segoe UI",Tahoma,sans-serif;color:#251f21;background:#fff}main{max-width:520px;margin:0 auto;padding:28px 20px 48px;text-align:center}
+img{width:112px;height:112px;border-radius:26px;box-shadow:0 4px 14px #0003}h1{font-size:26px;margin:16px 0 4px}p{color:#585254;margin:6px 0}
+a.btn{display:block;margin:22px 0 8px;padding:15px;border-radius:10px;background:#2f7d6d;color:#fff;text-decoration:none;font-size:18px;font-weight:700}
+a.alt{display:block;margin:8px 0;padding:13px;border-radius:10px;border:1px solid #cfcbcc;color:#251f21;text-decoration:none}
+ol{text-align:right;color:#585254;padding-inline-start:22px}li{margin:8px 0}h2{font-size:18px;text-align:right;margin-top:30px}</style></head>
+<body><main>
+<img src="icon.svg" alt="أيقونة حاسبة البناء">
+<h1>حاسبة البناء</h1>
+<p>احسب كمية الطوب والأسمنت والرمل. تشتغل من غير نت.</p>
+<a class="btn" id="dl" href="#">تحميل التطبيق (أندرويد)</a><p id="msg"></p>
+<a class="alt" href="index.html">أو افتحها وثبّتها من المتصفح</a>
+<h2>خطوات التثبيت على أندرويد</h2>
+<ol>
+<li>اضغط "تحميل التطبيق" وافتح الملف بعد ما ينزل.</li>
+<li>لو ظهرت رسالة "التثبيت من مصادر غير معروفة"، اضغط "الإعدادات" وفعّل السماح للمتصفح (مرة واحدة بس).</li>
+<li>اضغط "تثبيت". لو ظهر تحذير Play Protect اختار "تثبيت على أي حال".</li>
+<li>هتلاقي أيقونة "حاسبة البناء" على الشاشة الرئيسية.</li>
+</ol>
+<h2>بدون ملف: تثبيت من المتصفح</h2>
+<ol><li>افتح الرابط "أو افتحها وثبّتها" في Chrome.</li><li>من قائمة Chrome (النقاط الثلاث) اختار "تثبيت التطبيق" أو "إضافة إلى الشاشة الرئيسية".</li></ol>
+</main>
+<script>
+document.getElementById('dl').addEventListener('click',function(e){e.preventDefault();var m=document.getElementById('msg');m.textContent='جاري التحميل...';
+fetch('brick-calculator.apk.b64').then(function(r){return r.text()}).then(function(t){var b=atob(t.trim()),a=new Uint8Array(b.length);for(var i=0;i<b.length;i++)a[i]=b.charCodeAt(i);
+var u=URL.createObjectURL(new Blob([a],{type:'application/vnd.android.package-archive'})),x=document.createElement('a');x.href=u;x.download='brick-calculator.apk';document.body.appendChild(x);x.click();x.remove();m.textContent='تم. افتح الملف من التحميلات.'}).catch(function(){m.textContent='حصل خطأ في التحميل، جرب تاني.'})});
+</script></body></html>
