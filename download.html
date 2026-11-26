@@ -11,20 +11,16 @@ ol{text-align:right;color:#585254;padding-inline-start:22px}li{margin:8px 0}h2{f
 <img src="icon.svg" alt="أيقونة حاسبة البناء">
 <h1>حاسبة البناء</h1>
 <p>احسب كمية الطوب والأسمنت والرمل. تشتغل من غير نت.</p>
-<a class="btn" id="dl" href="#">تحميل التطبيق (أندرويد)</a><p id="msg"></p>
+<a class="btn" href="https://github.com/hn-brickcalc/calculator/releases/download/v3/1-brickcalc-v3.apk" download>تحميل التطبيق (أندرويد) - الإصدار 3</a><p id="msg">حجم الملف صغير (حوالي 33 ك.ب).</p>
 <a class="alt" href="index.html">أو افتحها وثبّتها من المتصفح</a>
 <h2>خطوات التثبيت على أندرويد</h2>
 <ol>
-<li>اضغط "تحميل التطبيق" وافتح الملف بعد ما ينزل.</li>
+<li>اضغط "تحميل التطبيق" وافتح الملف بعد ما ينزل (اسمه brickcalc-v3.apk).</li><li>لو عندك نسخة قديمة من التطبيق: ثبّت فوقها وهتتحدث لوحدها. مش لازم تمسحها.</li>
 <li>لو ظهرت رسالة "التثبيت من مصادر غير معروفة"، اضغط "الإعدادات" وفعّل السماح للمتصفح (مرة واحدة بس).</li>
 <li>اضغط "تثبيت". لو ظهر تحذير Play Protect اختار "تثبيت على أي حال".</li>
-<li>هتلاقي أيقونة "حاسبة البناء" على الشاشة الرئيسية.</li>
+<li>افتح التطبيق ونزّل لآخر الصفحة: لازم تلاقي "الإصدار 3 (v3)" وفي الأعلى تبويبات: بناء الطوب، اللياسة، الدهانات.</li>
 </ol>
 <h2>بدون ملف: تثبيت من المتصفح</h2>
 <ol><li>افتح الرابط "أو افتحها وثبّتها" في Chrome.</li><li>من قائمة Chrome (النقاط الثلاث) اختار "تثبيت التطبيق" أو "إضافة إلى الشاشة الرئيسية".</li></ol>
 </main>
-<script>
-document.getElementById('dl').addEventListener('click',function(e){e.preventDefault();var m=document.getElementById('msg');m.textContent='جاري التحميل...';
-fetch('brick-calculator.apk.b64').then(function(r){return r.text()}).then(function(t){var b=atob(t.trim()),a=new Uint8Array(b.length);for(var i=0;i<b.length;i++)a[i]=b.charCodeAt(i);
-var u=URL.createObjectURL(new Blob([a],{type:'application/vnd.android.package-archive'})),x=document.createElement('a');x.href=u;x.download='brick-calculator.apk';document.body.appendChild(x);x.click();x.remove();m.textContent='تم. افتح الملف من التحميلات.'}).catch(function(){m.textContent='حصل خطأ في التحميل، جرب تاني.'})});
-</script></body></html>
+</body></html>
