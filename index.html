@@ -36,6 +36,11 @@ ol li{margin-bottom:8px}
 .warn{background:var(--sand);border-radius:8px;padding:12px 14px;font-size:14px;margin-top:16px}
 bdi{unicode-bidi:isolate}
 .hide{display:none}
+.cta{display:block;text-align:center;background:#25a05a;color:#fff;text-decoration:none;font-weight:700;font-size:17px;padding:14px;border-radius:10px;margin-top:20px}
+.about{background:var(--sand);border-radius:12px;padding:16px;margin-top:20px}
+.about h2{margin:0 0 6px}
+.about p{margin:4px 0;color:var(--ink2);font-size:14px}
+.about a{color:var(--teal);font-weight:600}
 </style>
 </head>
 <body>
@@ -91,8 +96,16 @@ bdi{unicode-bidi:isolate}
 <li>الأسمنت بالوزن = الحجم × 1440 كجم/م³، والشيكارة 50 كجم. الرمل 1600 كجم/م³.</li>
 </ol>
 <div class="warn"><b>خد بالك:</b> الأرقام تقديرية للطلبية. الحسبة بدون بياض (لياسة) ولا أعمدة ولا أعتاب، وبفرض فرشة وفواصل رأسية كاملة بنفس السمك. راجع الخلطة والهالك حسب مواصفات المشروع.</div>
+<a class="cta" id="waBtn" href="#" target="_blank" rel="noopener">اطلب حساب كميات / استشارة على واتساب</a>
+<section class="about" id="about"><h2>عن المطور</h2>
+<p><b id="devName"></b></p>
+<p>مهندس مدني في جدة. التطبيق ده عملته علشان يسهّل حساب كميات الطوب والأسمنت والرمل في الموقع.</p>
+<p>لو عايز حساب كميات لمشروعك أو استشارة، كلمني على واتساب.</p>
+<p><a id="waLink" href="#" target="_blank" rel="noopener">تواصل على واتساب</a></p></section>
 </main>
 <script>
+var CONFIG={name:'م. حسام نزيه',whatsapp:'966571431108',msg:'السلام عليكم، عايز حساب كميات / استشارة.'};
+(function(){var u='https://wa.me/'+CONFIG.whatsapp+'?text='+encodeURIComponent(CONFIG.msg);document.getElementById('waBtn').href=u;document.getElementById('waLink').href=u;document.getElementById('devName').textContent=CONFIG.name})();
 var $=function(i){return document.getElementById(i)};
 var mode='dims',mix=4;
 function n(v){v=String(v).replace(/[٠-٩]/g,function(d){return '٠١٢٣٤٥٦٧٨٩'.indexOf(d)}).replace('٫','.').replace(',','.');var x=parseFloat(v);return isFinite(x)&&x>0?x:0}
